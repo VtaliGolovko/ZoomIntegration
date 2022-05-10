@@ -1,0 +1,134 @@
+<template>
+    <lightning-button variant="brand"
+       label="Zoom"
+       title="What is Modal/PopUp in LWC?"
+       onclick={openModal}
+       class="slds-m-left_x-small">
+    </lightning-button>
+    <!--Use template if:true to display/hide popup based on isModalOpen value--> 
+    <template if:true={isModalOpen}>
+        <!-- Modal/Popup Box LWC starts here -->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- Modal/Popup Box LWC header here -->
+                <header class="slds-modal__header">
+                    <button 
+                        class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" 
+                        title="Close" 
+                        onclick={closeModal}>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Zoom</h2>
+                </header>
+                <!-- Modal/Popup Box LWC body starts here -->
+                <div class="slds-modal__content slds-form_horizontal slds-p-around_medium slds-text-title slds-text-link_reset" id="modal-content-id-1">
+                    <lightning-input 
+                        label="Topic"
+                        value={topic}
+                        placeholder="Topic"  
+                        onchange={handleTopic}></lightning-input>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_4-of-12 "></div>
+                            <div class="slds-col slds-size_8-of-12 ">
+                                <div if:false={addDiscriptionValue}>
+                                    <lightning-button 
+                                    variant="base" 
+                                    label="+ Add Description"
+                                    onclick={handleDiscription}></lightning-button>
+                                </div>
+                                <div if:true={addDiscriptionValue}>
+                                    <lightning-textarea 
+                                    class="location"
+                                    placeholder="Description"  
+                                    onchange={handleDescription}></lightning-textarea>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    <div class="slds-grid slds-gutters ">
+                        <div class="slds-col slds-size_1-of-5 tsts"><span>&nbsp;When</span></div>
+                        <div class="slds-col slds-size_2-of-5">
+                            <lightning-input 
+                            class="DateTime"
+                            type="Date"
+                            placeholder="Description"  
+                            onchange={handleDate}></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_2-of-5">
+                            <lightning-input 
+                            class="DateTime"
+                            type="Time"
+                            placeholder="Time"  
+                            onchange={handleTime}></lightning-input>
+                        </div>
+                        <div class="slds-col"></div>
+                    </div>
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-5">&nbsp;Duration</div>
+                        <div class="slds-col slds-size_2-of-5">
+                            <lightning-combobox
+                            placeholder="Hour"
+                            value={value}
+                            options={DurationHourOptions}
+                            onchange={handleDurationHour} ></lightning-combobox>
+                        </div>
+                        <div class="slds-col slds-size_2-of-5">
+                            <lightning-combobox
+                            placeholder="Min"
+                            value={value}
+                            options={DurationMinOptions}
+                            onchange={handleDurationMin} ></lightning-combobox>
+                        </div>
+                        <div class="slds-col"></div>
+                        <div class="slds-col"></div>
+                    </div>
+                    <div>
+                        <lightning-combobox
+                            class="location"
+                            placeholder="GMT"
+                            label="TimeZone"
+                            value={value}
+                            options={GMToptions}
+                            onchange={handleGMT} ></lightning-combobox>
+                    </div>
+                    <div>
+                        <lightning-radio-group name="radioGroup1"
+                            label="Video Host"
+                            options={Host_options}
+                            value={hostValue}
+                            type="button"
+                            onchange={handleHost}></lightning-radio-group>
+                    </div>
+                    <div>
+                        <lightning-radio-group name="radioGroup2"
+                            label="Video Participant"
+                            options={Participant_options}
+                            value={participantValue}
+                            type="button"
+                            onchange={handleParticipant}></lightning-radio-group>
+                    </div>
+                    <lightning-button 
+                        value=true
+                        variant="base" 
+                        label={hideLabel}
+                        class="slds-m-left_x-small"
+                        onclick={handleHide}></lightning-button>
+                    <div if:true={hideValue}>
+                        <lightning-checkbox-group name="Checkbox Group"
+                            options={Checkbox_options}
+                            value={checkboxValue}
+                            onchange={handleCheckbox}></lightning-checkbox-group>
+                            <div class="footer"></div>
+                    </div> 
+                    </div>
+                    <div if:false={hideValue} class="emptyFooter"></div>
+                <!-- Modal/Popup Box LWC footer starts here -->
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={closeModal} title="Cancel">Cancel</button>
+                    <button class="slds-button slds-button_brand" onclick={submitDetails} title="OK">OK</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>
