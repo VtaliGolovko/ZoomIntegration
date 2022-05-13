@@ -1,25 +1,26 @@
 public with sharing class ZoomTokens {
-    private String clientId = 'S87JI129RJ_1MRSLdhcRjCQSsOfhNui2A';
+    private String clientId = 'H8VbNvwQMJ_1MRSLdhcRjCQSsOfhNui2A';
     private String urlGetTokens = 'https://zoom.us/oauth/token?code=' + clientId + '&grant_type=authorization_code&redirect_uri=https://google.com/';
     public String refreshToken {get; private set;}
     public String actualToken {get; private set;}
     public HttpResponse responseHttp {get; private set;}
     public String urlRefreshTokens {get; private set;}
+    public ZoomClientTokens__c ZoomClientTokens {get; private set;}
     
 
-    public void getTokens(){
+    public ZoomClientTokens__c getTokens(ZoomClientTokens__c zt){
         sendHttp(urlGetTokens);
         setZoomTokens();
-        system.debug('1 actualToken ' + actualToken);
-        system.debug('2 refreshToken ' + refreshToken);
+        setZoomClientTokens(zt);
+        return ZoomClientTokens;
     }
 
-    public void refreshTokens(){
+    public ZoomClientTokens__c refreshTokens(ZoomClientTokens__c zt){
+        updateRefreshUrl(zt);
         sendHttp(urlRefreshTokens);
-        system.debug(urlRefreshTokens);
         setZoomTokens();
-        system.debug('actualToken ' + actualToken);
-        system.debug('refreshToken ' + refreshToken);
+        setZoomClientTokens(zt);
+        return ZoomClientTokens;
     }
     
     private void sendHttp(String url) {
@@ -36,16 +37,20 @@ public with sharing class ZoomTokens {
     }
 
     private void setZoomTokens(){
-        if(responseHttp.getStatusCode() != 201){
-            Map<String, Object> results = (Map<String, Object>) JSON.deserializeUntyped(responseHttp.getBody());
-            this.actualToken = String.valueof(results.get('access_token'));
-            this.refreshToken = String.valueof(results.get('refresh_token'));
-            updateRefreshUrl();
-        }
+        Map<String, Object> results = (Map<String, Object>) JSON.deserializeUntyped(responseHttp.getBody());
+        this.actualToken = String.valueof(results.get('access_token'));
+        this.refreshToken = String.valueof(results.get('refresh_token'));
     }
 
-    private void updateRefreshUrl(){
+    private void updateRefreshUrl(ZoomClientTokens__c zt){
+        this.refreshToken = zt.RefreshToken1__c;
         this.urlRefreshTokens = 'https://zoom.us/oauth/token?grant_type=refresh_token&refresh_token=' + refreshToken;
+    }
+
+    private void setZoomClientTokens(ZoomClientTokens__c zt){
+        zt.RefreshToken1__c = this.refreshToken;
+        zt.ActualToken1__c = this.actualToken;
+        this.ZoomClientTokens = zt;
     }
 
 }
