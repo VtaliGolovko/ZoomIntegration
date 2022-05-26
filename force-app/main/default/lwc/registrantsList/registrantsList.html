@@ -1,0 +1,54 @@
+<template>
+    <div class="main">
+        <div class="slds-box">
+            <lightning-layout>
+                <lightning-combobox class="slds-m-right_small"
+                name="select account"
+                label="Select Account"
+                value={value}
+                placeholder="Select Account"
+                options={options}
+                onchange={accountChange} ></lightning-combobox>
+                
+                <lightning-input class="slds-m-right_small" type="date" label="Enter Date" onchange={dateChange}></lightning-input>
+            </lightning-layout>
+        </div>
+        <template if:true={value}>
+        <template if:true={dateValue}>
+            <div class="slds-box">
+                <lightning-accordion allow-multiple-sections-open active-section-name="A">
+                    <lightning-accordion-section name="Meeting 1" label="Meeting 1">
+                        <div style="height: 300px;">
+                            <lightning-datatable
+                                    key-field="id"
+                                    data={data}
+                                    columns={columns}>
+                            </lightning-datatable>
+                        </div> 
+                    </lightning-accordion-section>
+
+                    <lightning-accordion-section name="Meeting 2" label="Meeting 2">
+                        <div style="height: 300px;">
+                            <lightning-datatable
+                                    key-field="id"
+                                    data={data}
+                                    columns={columns}>
+                            </lightning-datatable>
+                        </div> 
+                    </lightning-accordion-section>
+
+                    <lightning-accordion-section name="Webinar 1" label="Webinar 1">
+                        <div style="height: 300px;">
+                            <lightning-datatable
+                                    key-field="id"
+                                    data={data}
+                                    columns={columns}>
+                            </lightning-datatable>
+                        </div> 
+                    </lightning-accordion-section>
+                </lightning-accordion>
+            </div>
+        </template>
+        </template>
+    </div>
+</template>

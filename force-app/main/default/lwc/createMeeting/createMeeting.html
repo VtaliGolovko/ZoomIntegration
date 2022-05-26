@@ -1,0 +1,62 @@
+<template>
+<div class="slds-modal__content slds-box slds-container_medium slds-align_absolute-center formHeader">Set your meeting parametrs</div>
+<div class="slds-modal__content slds-box slds-container_medium slds-align_absolute-center">
+    <lightning-record-edit-form object-api-name="Meeting__c">
+
+            <lightning-input-field field-name="Zoom_Account__c"></lightning-input-field>
+            <lightning-input-field field-name="Name"></lightning-input-field>
+            <lightning-input-field field-name="Description__c"></lightning-input-field>
+
+            <lightning-layout>
+                <lightning-input-field field-name="Start_Date__c"></lightning-input-field>
+                <lightning-input-field field-name="Start_Time__c"></lightning-input-field>
+            </lightning-layout>
+            
+            <lightning-input-field field-name="Time_Zone__c"></lightning-input-field>
+
+            <lightning-input-field field-name="Allow_participants_to_join_anytime__c"></lightning-input-field>
+            
+            
+            <lightning-layout>
+                <lightning-input class="slds-m-left_xx-small" label="Recurring meeting" type="checkbox" onchange={isRecurringMeeting} checked={isRecurring}></lightning-input>
+            </lightning-layout>
+            
+            <template if:true={isRecurring}>
+
+            <lightning-input-field field-name="Recurrence__c" onchange={RecurringMeeting}></lightning-input-field>
+
+            <lightning-input-field field-name="Repeat_every__c" onchange={RecurringMeeting}></lightning-input-field>
+
+            <template if:true={isWeekly}>
+                <lightning-input-field field-name="Weekly_days__c"></lightning-input-field>
+            </template>
+
+            <template if:true={isMonthly}>
+                <lightning-input-field field-name="Monthly_day__c"></lightning-input-field>
+                <lightning-layout>
+                    <lightning-input-field field-name="Monthly_week_day__c"></lightning-input-field>
+                    <lightning-input-field field-name="Monthly_week__c"></lightning-input-field>
+                </lightning-layout>
+            </template>
+            
+            <lightning-layout>
+                <lightning-input-field field-name="End_date_time__c"></lightning-input-field>
+                <lightning-input-field field-name="End_times__c"></lightning-input-field>
+            </lightning-layout>
+
+            </template>
+
+            <lightning-input-field field-name="Host_video__c"></lightning-input-field>
+            <lightning-input-field field-name="Participant_video__c"></lightning-input-field>
+            <lightning-input-field field-name="Mute_participants_upon_entry__c"></lightning-input-field>
+            <lightning-input-field field-name="Registration_type__c"></lightning-input-field>
+            <lightning-input-field field-name="Approval_type__c"></lightning-input-field>
+
+            <lightning-button class="slds-align_absolute-center"
+                type="submit"
+                label="Create meeting"
+            ></lightning-button>
+
+    </lightning-record-edit-form>
+</div>
+</template>

@@ -1,0 +1,15 @@
+.main {
+    background: white;
+    margin: 3% 10% 3%;
+    padding: 3% 20% 3%;
+}
+
+.background_img {
+    background-image: url('https://i.ibb.co/0Mp1YR8/2.png');
+}
+
+.formHeader {
+    font-size: 1.4rem;
+    font-weight: 300;
+    margin-bottom: 1%;
+}
